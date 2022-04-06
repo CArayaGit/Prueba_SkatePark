@@ -1,0 +1,94 @@
+require('dotenv').config()
+const { Client } = require('pg')
+const { Pool } = require("pg");
+
+const connectionString =
+    process.env.DATABASE_URL ||
+    "postgresql://postgres:controlactivo@localhost:5432/skatepark";
+
+const pool = process.env.DATABASE_URL
+    ? new Pool({
+          connectionString: connectionString,
+          ssl: { rejectUnauthorized: false },
+      })
+    : new Pool({ connectionString });
+
+const getUsersDB = async () => {
+    const client = await pool.connect();
+    try {
+        const respuesta = await client.query(
+            "SELECT * FROM skaters"
+        );
+        return {
+            ok: true,
+            users: respuesta.rows,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const createUserDB = async ({ nombre, email, hashPassword, experiencia, especialidad, pathFoto }) => {
+    const client = await pool.connect();
+    const query = {
+        text: "INSERT INTO skaters (nombre, email, password, experiencia, especialidad, foto) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
+        values: [nombre, email, hashPassword, experiencia, especialidad, pathFoto],
+    };
+
+    try {
+        const respuesta = await client.query(query);
+        const { id } = respuesta.rows[0];
+        return {
+            ok: true,
+            id,
+        };
+    } catch (error) {
+        console.log(error);
+        if (error.code === "23505") {
+            return {
+                ok: false,
+                msg: "Ya existe el email registrado",
+            };
+        } return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const getUserDB = async (email) => {
+    const client = await pool.connect();
+    const query = {
+        text: "SELECT * FROM skaters WHERE email = $1",
+        values: [email],
+    };
+    try {
+        const respuesta = await client.query(query);
+        return {
+            ok: true,
+            user: respuesta.rows[0],
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+module.exports = {
+    getUsersDB,
+    createUserDB,
+    getUserDB,
+};

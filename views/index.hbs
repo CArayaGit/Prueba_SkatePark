@@ -1,0 +1,96 @@
+    <div class="py-4">
+      <h2 class="text-center">Lista de participantes</h2>
+
+      <div id="app">
+      Loading data
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <hr class="text-center"/>
+
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Años de experiencia</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td><div></div></td>
+            <td>Tony Hawk</td>
+            <td>12</td>
+            <td>Kickflip</td>
+            <td class="text-success font-weight-bold">Aprobado</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td><div></div></td>
+            <td>Evelien Bouilliart</td>
+            <td>10</td>
+            <td>Heelflip</td>
+            <td class="text-success font-weight-bold">Aprobado</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td><div></div></td>
+            <td>Danny Way</td>
+            <td>8</td>
+            <td>Ollie</td>
+            <td class="text-warning font-weight-bold">En revisión</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="#">Iniciar Sesión</a> |
+      <a href="#">Registrarme</a>
+    </div>
+
+{{!-- <script>
+
+    const app = document.getElementById('app')
+    
+    const pintarDatos = (users) => {
+        app.innerHTML = ''
+        users.forEach(user => {
+            app.innerHTML += `
+            <div class="alert alert-primary">${user.email}</div>
+            `
+        })
+    }
+
+    //solicitud en fetch 
+    document.addEventListener('DOMContentLoaded', async() => {
+
+        if(!localStorage.getItem('token')){
+            window.location.href = "/login"
+        }
+        try {
+            //si existe se envia al backend
+            const res = await fetch('/api/v1/users', {
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+
+            const data = await res.json();
+            console.log(data)
+            if(!data.ok){
+                window.location.href = '/login'
+            }
+
+            pintarDatos(data.users);
+
+        }catch(e){
+            console.log(e)
+        }
+    });
+    
+</script> --}}
