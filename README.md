@@ -16,6 +16,12 @@ CREATE TABLE skaters (
 );
 ```
 
+### insertar datos en tabla para prueba:
+```
+insert into skaters (nombre, email, password, anos_experiencia, especialidad, foto, estado)
+values ('pedro', 'pedro@email.com', '123', 8, 'oly', 'hjkjh.jpg', false);
+```
+
 ### Requerimientos:
 
  - Crear una API REST con el Framework Express.

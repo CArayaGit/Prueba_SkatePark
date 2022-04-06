@@ -6,19 +6,19 @@
         <div class="form-group row w-50 m-auto">
           <div class="form-group col-12 col-sm-6">
             <label>Email</label>
-            <input class="form-control m-auto" name="email"/>
+            <input type="email" class="form-control m-auto" name="email"/>
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Nombre</label>
-            <input class="form-control m-auto" name="nombre"/>
+            <input type="text" class="form-control m-auto" name="nombre"/>
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Password</label>
-            <input class="form-control m-auto" name="password"/>
+            <input type="password" class="form-control m-auto" name="password"/>
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Repita la password</label>
-            <input class="form-control m-auto" />
+            <input type="password" class="form-control m-auto" />
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Años de experiencia</label>
@@ -41,7 +41,7 @@
       </form>
     </div>
 
-{{!-- <script>
+<script>
 
 const formulario = document.getElementById('formularioRegister')
 
@@ -52,7 +52,8 @@ formulario.addEventListener('submit', async(e) => {
     const formData = new FormData(formulario)
 
     //para validar datos en front para usuario(campos vacios y formato)
-    //const [email, password] = [...datos.values()]
+    const [email, nombre, password, experiencia, especialidad] = [...datos.values()]
+
     try {
         const res = await fetch('/api/v1/login', {
             method: 'post',
@@ -73,4 +74,4 @@ formulario.addEventListener('submit', async(e) => {
     }
 });
 
-</script> --}}
+</script>
