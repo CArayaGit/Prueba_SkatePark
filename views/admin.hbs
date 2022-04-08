@@ -13,31 +13,48 @@
             <th scope="col">Estado</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td><div></div></td>
-            <td>Tony Hawk</td>
-            <td>12</td>
-            <td>Kickflip</td>
-            <td><input type="checkbox" checked /></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td><div></div></td>
-            <td>Evelien Bouilliart</td>
-            <td>10</td>
-            <td>Heelflip</td>
-            <td><input type="checkbox" checked /></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td><div></div></td>
-            <td>Danny Way</td>
-            <td>8</td>
-            <td>Ollie</td>
-            <td><input type="checkbox" /></td>
-          </tr>
+        <tbody id="app">
+          <div>
+            <span class="visually-hidden">Loading...</span>
+            
+          </div>
+          
         </tbody>
       </table>
+      <a href="/" class="link">Volver al Home</a>
     </div>
+
+<script>
+    const app = document.getElementById('app')
+    
+    const pintarDatos = (data) => {
+        
+        data.forEach(item => {
+          const estado = item.estado;
+            app.innerHTML += `
+            <tr>
+              <th scope="row">${item.id}</th>
+              <td><img src="/avatars/${item.foto}" width="60px" height="60px" alt="${item.foto}"></td>
+              <td>${item.nombre}</td>
+              <td>${item.anos_experiencia}</td>
+              <td>${item.especialidad}</td>
+              <td><input type="checkbox" ${item.estado} /></td>
+            </tr>
+            `
+        })
+    }
+    
+    window.document.addEventListener("DOMContentLoaded", async () => {
+        const res = await fetch("/api/v1/users", {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await res.json();
+        console.log(data);
+       
+        pintarDatos(data.users);
+    });
+   
+    
+</script>

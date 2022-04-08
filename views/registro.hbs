@@ -18,7 +18,7 @@
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Repita la password</label>
-            <input type="password" class="form-control m-auto" />
+            <input type="password" class="form-control m-auto" name="passwordValid"/>
           </div>
           <div class="form-group col-12 col-sm-6">
             <label>Años de experiencia</label>
@@ -35,7 +35,7 @@
         </div>
         <div class="text-center">
           <button class="btn btn-info mb-3" type="submit">Registrarme</button>
-          <p><a href="/admin"> Iniciar sesión</a></p>
+          <p><a href="/login"> Iniciar sesión</a></p>
         </div>
         
       </form>
@@ -52,7 +52,17 @@ formulario.addEventListener('submit', async(e) => {
     const formData = new FormData(formulario)
 
     //para validar datos en front para usuario(campos vacios y formato)
-    //const [email, nombre, password, experiencia, especialidad] = [...datos.values()]
+    //const [email, nombre, password, experiencia, especialidad] = [...datos.values()];
+    /*Function validacion(){
+      if (
+            !nombre?.trim() ||
+            !email?.trim() ||
+            !password?.trim() ||
+            !experiencia?.trim()
+        ) {
+            throw new Error("Algunos campos están vacios");
+        }
+    };*/
 
     try {
         const res = await fetch('/api/v1/users', {
