@@ -8,7 +8,7 @@ CREATE DATABASE skatepark;
 CREATE TABLE skaters (
     id SERIAL, email VARCHAR(50) NOT NULL, 
     nombre VARCHAR(25) NOT NULL, 
-    password VARCHAR(25) NOT NULL, 
+    password VARCHAR(100) NOT NULL, 
     anos_experiencia INT NOT NULL, 
     especialidad VARCHAR(50) NOT NULL, 
     foto VARCHAR(255) NOT NULL, 
@@ -30,3 +30,4 @@ values ('pedro', 'pedro@email.com', '123', 8, 'oly', 'hjkjh.jpg', false);
  - Implementar seguridad y restricción de recursos o contenido con JWT.
  - Aplicar testing E2E, con Cypress una vez que se haya finalizado la construcción de la aplicación, el mismo debe contener al menos 3 pruebas.
  - Realizar la configuración necesaria del proyecto para ser desplegado en Heroku.
+

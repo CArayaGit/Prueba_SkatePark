@@ -3,12 +3,13 @@ const { nanoid } = require("nanoid");
 const requireDatos = (req, res, next) => {
     try {
         // validaciones
-        const { nombre, email, password } = req.body;
+        const { nombre, email, password, experiencia } = req.body;
 
         if (
             !nombre?.trim() ||
             !email?.trim() ||
             !password?.trim() ||
+            !experiencia?.trim() ||
             !req.files?.foto
         ) {
             throw new Error("Algunos campos están vacios");

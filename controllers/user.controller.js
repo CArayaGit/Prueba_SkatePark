@@ -1,10 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { getUserDB, createUserDB } = require("../database/db");
+const { nanoid } = require('nanoid')
+const { getUsersDB, createUserDB } = require("../database/db");
 const path = require("path");
 
 const getUsers = async (req, res) => {
-    const respuesta = await getUserDB();
+    const respuesta = await getUsersDB();
     if(!respuesta.ok) {
         return res.status(500).json({ OK: false, msg: respuesta.msg });
     }
@@ -13,8 +14,10 @@ const getUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
     try{
-        const { nombre, email, password } = req.body
+        const { nombre, email, password, experiencia, especialidad } = req.body
         const {foto} = req.files;
+        const pathFoto = `${nanoid()}.${foto.mimetype.split("/")[1]}`;
+        req.pathFoto = pathFoto;
 
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -23,8 +26,11 @@ const createUser = async (req, res) => {
             nombre,
             email,
             hashPassword,
+            experiencia, 
+            especialidad,
             pathFoto: req.pathFoto,
         });
+        console.log(respuesta);
 
         if(!respuesta.ok) {
             throw new Error(respuesta.msg);
@@ -59,7 +65,7 @@ const loginUser = async (req, res) => {
             throw new Error("Algunos campos están vacios");
         }
 
-        const respuesta = await getUserDB(email);
+        const respuesta = await getUsersDB(email);
         if (!respuesta.ok) {
             throw new Error(respuesta.msg);
         } if (!respuesta.user) {
