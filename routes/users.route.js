@@ -14,10 +14,10 @@ router.use(
 
 //router.get("/users", requireAuth, getUsers);
 router.get("/users", getUsers);
-router.post("/users", requireDatos, createUser);
-//router.post("/users", createUser);
+//router.post("/users", requireDatos, createUser);
+router.post("/users", createUser);
 router.post("/login", loginUser);
-// router.put("/users/:id", requireAuth, updateUser);
-// router.delete("/users/:id", requireAuth, deleteUser);
+//router.put("/users/:id", requireAuth, updateUser);
+//router.delete("/users/:id", requireAuth, deleteUser);
 
 module.exports = router;

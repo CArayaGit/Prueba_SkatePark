@@ -53,16 +53,6 @@ formulario.addEventListener('submit', async(e) => {
 
     //para validar datos en front para usuario(campos vacios y formato)
     //const [email, nombre, password, experiencia, especialidad] = [...datos.values()];
-    /*Function validacion(){
-      if (
-            !nombre?.trim() ||
-            !email?.trim() ||
-            !password?.trim() ||
-            !experiencia?.trim()
-        ) {
-            throw new Error("Algunos campos están vacios");
-        }
-    };*/
 
     try {
         const res = await fetch('/api/v1/users', {
