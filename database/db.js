@@ -17,7 +17,7 @@ const getUsersDB = async () => {
     const client = await pool.connect();
     try {
         const respuesta = await client.query(
-            "SELECT * FROM skaters"
+            "SELECT id, foto, nombre, anos_experiencia, especialidad, estado FROM skaters"
         );
         return {
             ok: true,
@@ -65,10 +65,58 @@ const createUserDB = async ({ nombre, email, hashPassword, experiencia, especial
     }
 };
 
-const getUserDB = async (email) => {
+const getUserDB = async ({email}) => {
     const client = await pool.connect();
     const query = {
         text: "SELECT * FROM skaters WHERE email = $1",
+        values: [email],
+    };
+    try {
+        const respuesta = await client.query(query);
+        return {
+            ok: true,
+            user: respuesta.rows[0],
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const updateUserDB = async ({ nombre, email, hashPassword, experiencia, especialidad }) => {
+    const client = await pool.connect();
+    const query = {
+        text: "UPDATE skaters SET nombre=$1, email=$2, password=$3, anos_experiencia=$4, especialidad=$5 WHERE email=$2",
+        values: [nombre, email, hashPassword, experiencia, especialidad],
+    };
+
+    try {
+        const respuesta = await client.query(query);
+        console.log(respuesta.rows);
+        return {
+            ok: true,
+            users: respuesta.rows,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            ok: false,
+            msg: error.message,
+        };
+    } finally {
+        client.release();
+    }
+};
+
+const deleteUserDB = async ({email}) => {
+    const client = await pool.connect();
+    const query = {
+        text: "DELETE FROM skaters WHERE email = $1;",
         values: [email],
     };
     try {
@@ -92,4 +140,6 @@ module.exports = {
     getUsersDB,
     createUserDB,
     getUserDB,
+    updateUserDB,
+    deleteUserDB
 };

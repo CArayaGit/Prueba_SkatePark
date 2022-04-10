@@ -19,8 +19,6 @@
     </div>
 
 
-
-
 <script>
 const formulario = document.getElementById('login')
 
@@ -30,18 +28,6 @@ formulario.addEventListener('submit', async(e) => {
     //formdata utiliza los "name" de los input
     const formData = new FormData(formulario)
 
-    //para validar datos en front para usuario(campos vacios y formato)
-    //const [email, password] = [...datos.values()]
-   /* Function validacion(){
-      if (
-            !email?.trim() ||
-            !password?.trim() ||
-        ) {
-            throw new Error("Algunos campos están vacios");
-        }
-    };*/
-    
-    
     try {
         const res = await fetch('/api/v1/login', {
             method: 'post',
@@ -57,7 +43,8 @@ formulario.addEventListener('submit', async(e) => {
         //para guardar token en localstorage:
         localStorage.setItem('token', data.token)
         //enviar usuario a ruta raiz protegida
-        window.location.href = "/editar"
+        
+        window.location.href = `/editar`
 
     }catch(error){
         console.log(error)

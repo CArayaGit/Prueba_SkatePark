@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+
 const requireAuth = (req, res, next) => {
     try {
         console.log(req.headers);
@@ -15,6 +16,7 @@ const requireAuth = (req, res, next) => {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
 
         req.id = payload.id;
+        console.log(req.id);
         next();
     } catch (error) {
         if (error.message === "jwt malformed") {

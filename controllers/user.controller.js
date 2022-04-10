@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { nanoid } = require('nanoid')
-const { getUsersDB, createUserDB } = require("../database/db");
+const { getUsersDB, createUserDB, getUserDB, updateUserDB, deleteUserDB } = require("../database/db");
 const path = require("path");
 
 const getUsers = async (req, res) => {
@@ -65,7 +65,7 @@ const loginUser = async (req, res) => {
             throw new Error("Algunos campos están vacios");
         }
 
-        const respuesta = await getUsersDB(email);
+        const respuesta = await getUserDB({email});
         if (!respuesta.ok) {
             throw new Error(respuesta.msg);
         } if (!respuesta.user) {
@@ -96,8 +96,77 @@ const loginUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    
+    try{
+        const { nombre, email, password, experiencia, especialidad } = req.body
+
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+
+        const respuesta = await updateUserDB({
+            nombre,
+            email,
+            hashPassword,
+            experiencia, 
+            especialidad,
+        });
+        console.log(respuesta);
+
+        if(!respuesta.ok) {
+            throw new Error(respuesta.msg);
+        }
+
+        const payload = {id: respuesta.id};
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        return res.json({
+            ok: true,
+            msg: respuesta.msg,
+        });
+    } catch(error) {
+        return res.status(400).json({
+            ok: false,
+            msg: error.message
+        });
+    }
+};
+
+const deleteUser = async (req, res) => {
+    const respuesta = await updateUserDB();
+    
+    try{
+        const { email } = req.body
+
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+
+        const respuesta = await deleteUserDB({ email });
+        console.log(respuesta);
+
+        if(!respuesta.ok) {
+            throw new Error(respuesta.msg);
+        }
+
+        const payload = {id: respuesta.id};
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        return res.json({
+            ok: true,
+            msg: respuesta.msg,
+        });
+    } catch(error) {
+        return res.status(400).json({
+            ok: false,
+            msg: error.message
+        });
+    }
+};
+
 module.exports = {
     getUsers,
     createUser,
     loginUser,
+    updateUser,
+    deleteUser
 };

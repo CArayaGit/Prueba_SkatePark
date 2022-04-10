@@ -52,7 +52,7 @@ formulario.addEventListener('submit', async(e) => {
     const formData = new FormData(formulario)
 
     //para validar datos en front para usuario(campos vacios y formato)
-    //const [email, nombre, password, experiencia, especialidad] = [...datos.values()];
+    //const [email, nombre, password, passwordValid, experiencia, especialidad] = [...datos.
 
     try {
         const res = await fetch('/api/v1/users', {

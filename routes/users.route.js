@@ -1,6 +1,6 @@
 const express = require("express");
 const expressFileUpload = require("express-fileupload");
-const { getUsers, createUser, loginUser } = require("../controllers/user.controller");
+const { getUsers, createUser, loginUser, updateUser, deleteUser } = require("../controllers/user.controller");
 const { requireAuth } = require("../middlewares/requireAuth");
 const { requireDatos } = require("../middlewares/requireDatos");
 const router = express.Router();
@@ -12,12 +12,10 @@ router.use(
     })
 );
 
-//router.get("/users", requireAuth, getUsers);
 router.get("/users", getUsers);
-//router.post("/users", requireDatos, createUser);
-router.post("/users", createUser);
+router.post("/users", requireDatos, createUser);
 router.post("/login", loginUser);
-//router.put("/users/:id", requireAuth, updateUser);
-//router.delete("/users/:id", requireAuth, deleteUser);
+router.put("/users/:email", updateUser);
+router.delete("/users/:email", deleteUser);
 
 module.exports = router;
