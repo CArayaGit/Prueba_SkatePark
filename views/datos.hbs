@@ -39,41 +39,7 @@
     </div>
 
 <script>
-    const app = document.getElementById("formularioEdit");
-    const pintarDatos = (data) => {
-      console.log(data);
-        data.forEach((item) => {
-            app.innerHTML += `
-            <div class="form-group row w-50 m-auto">
-          <div class="form-group col-12 col-sm-6">
-            <label>Email</label>
-            <input type="email" value="${item.email}" class="form-control m-auto"  name="email" />
-          </div>
-          <div class="form-group col-12 col-sm-6">
-            <label>Nombre</label>
-            <input type="text" value="${item.nombre}" class="form-control m-auto" name="nombre" />
-          </div>
-          <div class="form-group col-12 col-sm-6">
-            <label>Password</label>
-            <input type="password" value="${item.password}" class="form-control m-auto" name="password" />
-          </div>
-          <div class="form-group col-12 col-sm-6">
-            <label>Repita la password</label>
-            <input type="password" value="${item.password}" class="form-control m-auto" name="passwordValid" />
-          </div>
-          <div class="form-group col-12 col-sm-6">
-            <label>Años de experiencia</label>
-            <input value="${item.anos_experiencia}" class="form-control m-auto" name="experiencia" />
-          </div>
-          <div class="form-group col-12 col-sm-6">
-            <label>Especialidad</label>
-            <input value="${item.especialidad}" class="form-control m-auto" name="especialidad" />
-          </div>
-        </div>
-            `;
-        });
-    };
-    
+        
     window.document.addEventListener("DOMContentLoaded", async () => {
         if (!localStorage.getItem("token")) {
             window.location.href = "/login";
@@ -91,10 +57,10 @@
         pintarDatos(data.users);
     });
 
- const formData = new FormData(formularioEdit)
+    const formData = new FormData('formularioEdit')
 
     try {
-        const res = await fetch('/api/v1/users', {
+        const res = await fetch('/api/v1/users/:email', {
             method: 'put',
             body: formData
         })
@@ -111,5 +77,7 @@
     }catch(error){
         console.log(error)
     }
+
+   
 
 </script>

@@ -20,6 +20,7 @@
 
 
 <script>
+
 const formulario = document.getElementById('login')
 
 formulario.addEventListener('submit', async(e) => {
@@ -43,12 +44,13 @@ formulario.addEventListener('submit', async(e) => {
         //para guardar token en localstorage:
         localStorage.setItem('token', data.token)
         //enviar usuario a ruta raiz protegida
-        
-        window.location.href = `/editar`
+        console.log(data);
+        window.location.href = `/editar/${data.{email}}`
 
     }catch(error){
         console.log(error)
     }
 });
 
+        
 </script>
