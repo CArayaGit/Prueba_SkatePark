@@ -44,8 +44,9 @@ formulario.addEventListener('submit', async(e) => {
         //para guardar token en localstorage:
         localStorage.setItem('token', data.token)
         //enviar usuario a ruta raiz protegida
-        console.log(data);
-        window.location.href = `/editar/${data.{email}}`
+        const [email] = [...formData.values()];
+
+        window.location.href = `/editar/${email}`
 
     }catch(error){
         console.log(error)

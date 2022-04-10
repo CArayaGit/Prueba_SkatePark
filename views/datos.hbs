@@ -54,13 +54,13 @@
         if (!data.ok) {
             window.location.href = "/login";
         }
-        pintarDatos(data.users);
+        
     });
 
     const formData = new FormData('formularioEdit')
 
     try {
-        const res = await fetch('/api/v1/users/:email', {
+        const res = await fetch('/api/v1/editar/:email', {
             method: 'put',
             body: formData
         })

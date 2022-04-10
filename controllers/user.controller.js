@@ -133,13 +133,9 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const respuesta = await updateUserDB();
-    
+        
     try{
         const { email } = req.body
-
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
 
         const respuesta = await deleteUserDB({ email });
         console.log(respuesta);
