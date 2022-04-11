@@ -15,7 +15,7 @@ router.use(
 router.get("/users", getUsers);
 router.post("/users", requireDatos, createUser);
 router.post("/login", loginUser);
-router.put("/editar/:email", updateUser);
-router.delete("/editar/:email", deleteUser);
+router.put("/editar/:email", requireAuth, updateUser);
+router.delete("/editar/:email", requireAuth, deleteUser);
 
 module.exports = router;
